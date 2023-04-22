@@ -9,7 +9,7 @@ type ModalProps = {
   isOpen?: boolean;
   title?: string;
   body?: React.ReactElement;
-  footer: React.ReactElement;
+  footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
   onClose: () => void;
@@ -69,10 +69,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      <div
-        className="focus-outline-none fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-hidden bg-neutral-800/70 outline-none"
-        onClick={handleClose}
-      >
+      <div className="focus-outline-none fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-hidden bg-neutral-800/70 outline-none">
         <div className="relative mx-auto my-6 h-full w-full md:h-auto md:w-4/6 lg:h-auto lg:w-3/6 xl:w-2/5">
           <div
             className={`
