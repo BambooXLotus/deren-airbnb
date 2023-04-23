@@ -3,17 +3,17 @@
 import Image from "next/image";
 
 type AvatarProps = {
-  id?: string;
+  src: string | null | undefined;
 };
 
-export const Avatar: React.FC<AvatarProps> = () => {
+export const Avatar: React.FC<AvatarProps> = ({ src }) => {
   return (
     <Image
       className="rounded-full"
       width={32}
       height={32}
       alt="Avatar"
-      src="/images/avatar.png"
+      src={src || "/images/avatar.png"}
     />
   );
 };

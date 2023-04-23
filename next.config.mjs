@@ -10,6 +10,9 @@ const config = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: ["cdn.discordapp.com", "lh3.googleusercontent.com"],
+  },
   /**
    * If you have `experimental: { appDir: true }` set, then you must comment the below `i18n` config
    * out.
