@@ -3,8 +3,10 @@ import { type GetServerSidePropsContext } from 'next';
 import { type DefaultSession, getServerSession, type NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import { env } from '~/env.mjs';
 import { prisma } from '~/server/db';
+import bcrypt from 'bcrypt'
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -33,17 +35,50 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
-  },
+  // DONT NEED THIS MAYBE???
+  // callbacks: {
+  //   session: ({ session, user }) => ({
+  //     ...session,
+  //     user: {
+  //       ...session.user,
+  //       id: user.id,
+  //     },
+  //   }),
+  // },
   adapter: PrismaAdapter(prisma),
   providers: [
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        email: { label: 'email', type: 'text' },
+        password: { label: 'password', type: 'password' }
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Invalid credentails')
+        }
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email
+          }
+        })
+
+        if (!user || !user?.hashedPassword) {
+          throw new Error('Invalid credentails')
+        }
+
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password, user.hashedPassword
+        )
+
+        if (!isCorrectPassword) {
+          throw new Error('Invalid credentails')
+        }
+
+        return user
+      }
+    }),
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
@@ -62,6 +97,14 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  pages: {
+    signIn: '/'
+  },
+  debug: env.NODE_ENV === 'development',
+  session: {
+    strategy: 'jwt'
+  },
+  secret: env.NEXTAUTH_SECRET
 };
 
 /**
