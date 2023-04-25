@@ -92,9 +92,9 @@ export const Modal: React.FC<ModalProps> = ({
                 <div className="text-lg font-bold">{title}</div>
               </div>
               {/* BODY */}
-              <div className="relative flex-auto p-6">{body}</div>
+              <div className="relative flex-auto px-6 py-3">{body}</div>
               {/* FOOTER */}
-              <div className="flex flex-col gap-2 p-6">
+              <div className="flex flex-col gap-2 p-6 pt-3">
                 <div className="flex w-full flex-row items-center gap-4">
                   {secondaryAction && secondaryActionLabel && (
                     <Button
