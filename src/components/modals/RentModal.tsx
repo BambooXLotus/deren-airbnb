@@ -13,6 +13,7 @@ import {
 } from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
 import { Counter } from "../inputs/Counter";
+import { ImageUpload } from "../inputs/ImageUpload";
 
 type RentModalProps = {
   id?: string;
@@ -69,6 +70,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
   const watchGuestCount = watch("guestCount", "");
   const watchRoomCount = watch("roomCount", "");
   const watchBathroomCount = watch("bathroomCount", "");
+  const watchImageSrc = watch("imageSrc", "");
 
   const Map = useMemo(
     () =>
@@ -167,6 +169,21 @@ export const RentModal: React.FC<RentModalProps> = () => {
           subtitle="How many toilets can people use?"
           value={watchBathroomCount}
           onChange={(value) => setCustomValue("bathroomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading
+          title="Add a photo of your place"
+          subtitle="Show guests what your place looks like!"
+        />
+        <ImageUpload
+          value={watchImageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );
