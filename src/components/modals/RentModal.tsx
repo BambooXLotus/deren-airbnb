@@ -193,7 +193,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
 
   if (step === STEPS.DESCRIPTION) {
     bodyContent = (
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
         <Heading
           title="How would you describe your place?"
           subtitle="Short and sweet works best!"
@@ -210,6 +210,27 @@ export const RentModal: React.FC<RentModalProps> = () => {
         <Input
           id="description"
           label="Description"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-4">
+        <Heading
+          title="How would you describe your place?"
+          subtitle="Short and sweet works best!"
+        />
+        <Input
+          id="price"
+          label="price"
+          formatPrice
+          type="number"
           disabled={isLoading}
           register={register}
           errors={errors}
