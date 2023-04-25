@@ -1,33 +1,37 @@
 "use client";
 
-import useRentModal from "~/hooks/useRentModal";
-import { Modal } from "./Modal";
+import axios from "axios";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
+import { type FieldValues, type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import useRentModal from "~/hooks/useRentModal";
+
 import { Heading } from "../Heading";
-import { categoriesList } from "../navbar/CategoriesList";
 import { CategoryInput } from "../inputs/CategoryInput";
-import { type FieldValues, useForm } from "react-hook-form";
+import { Counter } from "../inputs/Counter";
 import {
   CountrySelect,
   type CountrySelectValue,
 } from "../inputs/CountrySelect";
-import dynamic from "next/dynamic";
-import { Counter } from "../inputs/Counter";
 import { ImageUpload } from "../inputs/ImageUpload";
 import { Input } from "../inputs/Input";
+import { categoriesList } from "../navbar/CategoriesList";
+import { Modal } from "./Modal";
+import { useRouter } from "next/navigation";
 
 type RentModalProps = {
   id?: string;
 };
 
-type RentFormInput = {
+export type RentFormInput = {
   category: string;
-  location: string;
+  location: CountrySelectValue;
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
   imageSrc: string;
-  price: number;
+  price: string;
   title: string;
   description: string;
 };
@@ -45,6 +49,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
   const rentModal = useRentModal();
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -105,6 +110,38 @@ export const RentModal: React.FC<RentModalProps> = () => {
 
     return "Back";
   }, [step]);
+
+  function onBack() {
+    setStep((value) => value - 1);
+  }
+
+  function onNext() {
+    setStep((value) => value + 1);
+  }
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+
+    setIsLoading(true);
+
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("Listing created!");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch((error) => {
+        toast.error("Something went wrong!!!");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   let bodyContent = (
     <div className="flex flex-col gap-4">
@@ -240,14 +277,6 @@ export const RentModal: React.FC<RentModalProps> = () => {
     );
   }
 
-  function onBack() {
-    setStep((value) => value - 1);
-  }
-
-  function onNext() {
-    setStep((value) => value + 1);
-  }
-
   return (
     <Modal
       title="Airbnb your home!"
@@ -257,7 +286,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
     />
   );
 };

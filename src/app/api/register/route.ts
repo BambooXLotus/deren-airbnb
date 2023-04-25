@@ -5,7 +5,6 @@ import { prisma } from '~/server/db'
 export async function POST(
   request: Request
 ) {
-  console.log('here')
   const body = await request.json()
 
   const { email, name, password } = body

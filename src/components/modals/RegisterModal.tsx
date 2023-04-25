@@ -26,6 +26,19 @@ export const RegisterModal: React.FC<RegisterModalProps> = () => {
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    defaultValues: { name: "", email: "", password: "" },
+  });
+
+  const toggle = useCallback(() => {
+    loginModal.onOpen();
+    registerModal.onClose();
+  }, [loginModal, registerModal]);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
@@ -41,19 +54,6 @@ export const RegisterModal: React.FC<RegisterModalProps> = () => {
         setIsLoading(false);
       });
   };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: { name: "", email: "", password: "" },
-  });
-
-  const toggle = useCallback(() => {
-    loginModal.onOpen();
-    registerModal.onClose();
-  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
