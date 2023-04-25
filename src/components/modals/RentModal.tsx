@@ -8,9 +8,22 @@ import { categoriesList } from "../navbar/CategoriesList";
 import { CategoryInput } from "../inputs/CategoryInput";
 import { type FieldValues, useForm } from "react-hook-form";
 import { CountrySelect } from "../inputs/CountrySelect";
+import dynamic from "next/dynamic";
 
 type RentModalProps = {
   id?: string;
+};
+
+type RentFormInput = {
+  category: string;
+  location: string;
+  guestCount: number;
+  roomCount: number;
+  bathroomCount: number;
+  imageSrc: string;
+  price: number;
+  title: string;
+  description: string;
 };
 
 const STEPS = {
@@ -47,9 +60,18 @@ export const RentModal: React.FC<RentModalProps> = () => {
     },
   });
 
-  const categoryWatcher = watch("category");
+  const watchCategory = watch("category", "");
+  const watchLocation = watch("location", "");
 
-  const setCustomValue = (id: string, value: any) => {
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [watchLocation]
+  );
+
+  const setCustomValue = (id: string, value: string) => {
     setValue(id, value, {
       shouldDirty: true,
       shouldTouch: true,
@@ -87,7 +109,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
                 setCustomValue("category", clickedCategory)
               }
               icon={category.icon}
-              selected={categoryWatcher === category.label}
+              selected={watchCategory === category.label}
               label={category.label}
             />
           </div>
@@ -104,8 +126,10 @@ export const RentModal: React.FC<RentModalProps> = () => {
           subtitle="Help guest find you!"
         />
         <CountrySelect
+          value={watchLocation}
           onChange={(value) => setCustomValue("location", value)}
         />
+        <Map center={watchLocation?.latlng} />
       </div>
     );
   }
