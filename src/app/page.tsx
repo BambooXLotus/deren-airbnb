@@ -1,7 +1,28 @@
-import { type NextPage } from "next";
+import getCurrentUser from "~/actions/getCurrentUser";
+import getListings from "~/actions/getListings";
+import { Container } from "~/components/Container";
+import { EmptyState } from "~/components/EmptyState";
+import { ListingCard } from "~/components/listings/ListingCard";
 
-const HomePage: NextPage = () => {
-  return <div>Deren Airbnb</div>;
-};
+export default async function HomePage() {
+  const currentUser = await getCurrentUser();
+  const listings = await getListings();
 
-export default HomePage;
+  if (listings?.length === 0) {
+    return <EmptyState showReset />;
+  }
+
+  return (
+    <Container>
+      <div className="grid grid-cols-1 gap-8 pt-24 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        {listings?.map((listing) => (
+          <ListingCard
+            key={listing.id}
+            listing={listing}
+            currentUser={currentUser}
+          />
+        ))}
+      </div>
+    </Container>
+  );
+}
