@@ -40,6 +40,10 @@ export const ListingClient: React.FC<ListingClientProps> = ({
               user={listing.user}
               category={category}
               description={listing.description}
+              guestCount={listing.guestCount}
+              roomCount={listing.roomCount}
+              bathroomCount={listing.bathroomCount}
+              locationValue={listing.locationValue}
             />
           </div>
         </div>
