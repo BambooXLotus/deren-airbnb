@@ -73,8 +73,8 @@ export const ListingClient: React.FC<ListingClientProps> = ({
       .then(() => {
         toast.success("Airbnb has been reserved!");
         setDateRange(initialDateRange);
-        // Redirect to /trips
-        router.refresh();
+
+        router.push("/trips");
       })
       .catch(() => toast.error("SOMTHING WONG!!!"))
       .finally(() => setIsLoading(false));
