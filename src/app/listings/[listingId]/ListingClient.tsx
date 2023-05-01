@@ -52,10 +52,14 @@ export const ListingClient: React.FC<ListingClientProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(listing.price);
-  const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+  const [dateRange, setDateRange] = useState<Range | undefined>(
+    initialDateRange
+  );
 
   const onCreateReservation = useCallback(async () => {
     if (!currentUser) return loginModal.onOpen();
+
+    if (!dateRange) return;
 
     setIsLoading(true);
 
@@ -74,18 +78,10 @@ export const ListingClient: React.FC<ListingClientProps> = ({
       })
       .catch(() => toast.error("SOMTHING WONG!!!"))
       .finally(() => setIsLoading(false));
-  }, [
-    currentUser,
-    dateRange.startDate,
-    dateRange.endDate,
-    listing.id,
-    loginModal,
-    totalPrice,
-    router,
-  ]);
+  }, [currentUser, dateRange, listing.id, loginModal, totalPrice, router]);
 
   useEffect(() => {
-    if (dateRange.startDate && dateRange.endDate) {
+    if (dateRange && dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInCalendarDays(
         dateRange.endDate,
         dateRange.startDate
@@ -97,7 +93,7 @@ export const ListingClient: React.FC<ListingClientProps> = ({
         setTotalPrice(listing.price);
       }
     }
-  }, [dateRange.startDate, dateRange.endDate, listing.price]);
+  }, [dateRange, listing.price]);
 
   const category = useMemo(() => {
     return categoriesList.find(

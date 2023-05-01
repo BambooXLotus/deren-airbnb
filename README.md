@@ -4,7 +4,15 @@ An airbnb clone coded in
 
 - NextJS 13!
 - TailwindsCSS
-- more to come!
+- Prisma
+- SupabaseDB (postgres)
+- NextAuth
+  - email/pass
+  - Google Provider
+  - Discord Provider
+- Cloudinary
+- React-Hook-Forms
+- Zustand
 
 ## How to run
 

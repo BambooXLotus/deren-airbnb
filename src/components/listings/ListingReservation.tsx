@@ -7,7 +7,7 @@ import { Button } from "../Button";
 type ListingReservationProps = {
   price: number;
   totalPrice: number;
-  dateRange: Range;
+  dateRange: Range | undefined;
   disabled?: boolean;
   disabledDates: Date[];
   onChangeDate: (value: Range | undefined) => void;
