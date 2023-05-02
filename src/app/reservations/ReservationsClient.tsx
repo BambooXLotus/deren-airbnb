@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ListingCard } from "~/components/listings/ListingCard";
+import { GridContainer } from "~/components/GridContainer";
 
 type ReservationsClientProps = {
   reservations: (Reservation & {
@@ -47,7 +48,7 @@ export const ReservationsClient: React.FC<ReservationsClientProps> = ({
   return (
     <Container>
       <Heading title="Reservations" subtitle="Bookings on your properties" />
-      <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <GridContainer>
         {reservations.map((reservation) => (
           <ListingCard
             key={reservation.id}
@@ -60,7 +61,7 @@ export const ReservationsClient: React.FC<ReservationsClientProps> = ({
             currentUser={currentUser}
           />
         ))}
-      </div>
+      </GridContainer>
     </Container>
   );
 };

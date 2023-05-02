@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Container } from "~/components/Container";
+import { GridContainer } from "~/components/GridContainer";
 import { Heading } from "~/components/Heading";
 import { ListingCard } from "~/components/listings/ListingCard";
 import { type SafeUser } from "~/types";
@@ -50,7 +51,7 @@ export const TripsClient: React.FC<TripsClientProps> = ({
         title="Trips"
         subtitle="Where you've been and where you're going"
       />
-      <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <GridContainer>
         {reservations.map((reservation) => (
           <ListingCard
             key={reservation.id}
@@ -63,7 +64,7 @@ export const TripsClient: React.FC<TripsClientProps> = ({
             currentUser={currentUser}
           />
         ))}
-      </div>
+      </GridContainer>
     </Container>
   );
 };

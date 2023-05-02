@@ -35,6 +35,11 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     rentModal.onOpen();
   }, [currentUser, loginModal, rentModal]);
 
+  function handleRouteTo(routeTo: string) {
+    toggleOpen();
+    router.push(routeTo);
+  }
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -59,20 +64,20 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="flex cursor-pointer flex-col">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => router.push("/trips")} label="Trips" />
                 <MenuItem
-                  onClick={() => router.push("/favorites")}
+                  onClick={() => handleRouteTo("/trips")}
+                  label="Trips"
+                />
+                <MenuItem
+                  onClick={() => handleRouteTo("/favorites")}
                   label="Favorites"
                 />
                 <MenuItem
-                  onClick={() => {
-                    toggleOpen();
-                    router.push("/reservations");
-                  }}
+                  onClick={() => handleRouteTo("/reservations")}
                   label="Reservations"
                 />
                 <MenuItem
-                  onClick={() => router.push("/properties")}
+                  onClick={() => handleRouteTo("/properties")}
                   label="Properties"
                 />
                 <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
