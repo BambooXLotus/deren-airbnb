@@ -70,7 +70,7 @@ export const SearchModal: React.FC<SearchModalProps> = () => {
       currentQuery = qs.parse(params.toString());
     }
 
-    const updatedQuery = {
+    const updatedQuery: any = {
       ...currentQuery,
       locationValue: location?.value,
       guestCount,
@@ -78,10 +78,10 @@ export const SearchModal: React.FC<SearchModalProps> = () => {
       bathroomCount,
     };
 
-    if (dateRange.startDate) {
+    if (dateRange?.startDate) {
       updatedQuery.startDate = formatISO(dateRange.startDate);
     }
-    if (dateRange.endDate) {
+    if (dateRange?.endDate) {
       updatedQuery.endDate = formatISO(dateRange.endDate);
     }
 
