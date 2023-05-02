@@ -195,14 +195,12 @@ export const RentModal: React.FC<RentModalProps> = () => {
           value={watchGuestCount}
           onChange={(value) => setCustomValue("guestCount", value)}
         />
-        <hr />
         <Counter
           title="Rooms"
           subtitle="How many rooms do you have?"
           value={watchRoomCount}
           onChange={(value) => setCustomValue("roomCount", value)}
         />
-        <hr />
         <Counter
           title="Bathrooms"
           subtitle="How many toilets can people use?"
