@@ -72,7 +72,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
       className="group col-span-1 cursor-pointer"
       onClick={() => router.push(`/listings/${listing.id}`)}
     >
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex w-full flex-col gap-1">
         <div className="relative aspect-square w-full overflow-hidden rounded-xl">
           <Image
             fill
@@ -84,7 +84,8 @@ export const ListingCard: React.FC<ListingCardProps> = ({
             <HeartButton listingId={listing.id} currentUser={currentUser} />
           </div>
         </div>
-        <div className="font-semi-bold text-lg">
+        <div className="truncate text-lg font-bold">{listing.title}</div>
+        <div className="font-semi-bold truncate text-lg">
           {location?.region}, {location?.label}
         </div>
         <div className="font-light text-neutral-500">
