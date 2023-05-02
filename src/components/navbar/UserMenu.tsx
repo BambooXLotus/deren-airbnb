@@ -67,12 +67,13 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 />
                 <MenuItem
                   onClick={() => {
-                    () => router.push("/reservations/");
+                    toggleOpen();
+                    router.push("/reservations");
                   }}
                   label="Reservations"
                 />
                 <MenuItem
-                  onClick={() => router.push("/properties/")}
+                  onClick={() => router.push("/properties")}
                   label="Properties"
                 />
                 <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
