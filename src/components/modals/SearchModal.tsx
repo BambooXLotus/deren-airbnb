@@ -59,7 +59,7 @@ export const SearchModal: React.FC<SearchModalProps> = () => {
     setStep((currentStep) => currentStep + 1);
   }, []);
 
-  const onSubmit = useCallback(async () => {
+  const onSubmit = useCallback(() => {
     if (step !== STEPS.INFO) {
       return onNext();
     }
@@ -70,7 +70,7 @@ export const SearchModal: React.FC<SearchModalProps> = () => {
       currentQuery = qs.parse(params.toString());
     }
 
-    const updatedQuery: any = {
+    const updatedQuery: qs.StringifiableRecord = {
       ...currentQuery,
       locationValue: location?.value,
       guestCount,

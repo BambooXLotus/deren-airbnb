@@ -72,12 +72,12 @@ export const RentModal: React.FC<RentModalProps> = () => {
     },
   });
 
-  const watchCategory = watch("category", "");
-  const watchLocation = watch("location", "");
-  const watchGuestCount = watch("guestCount", "");
-  const watchRoomCount = watch("roomCount", "");
-  const watchBathroomCount = watch("bathroomCount", "");
-  const watchImageSrc = watch("imageSrc", "");
+  const watchCategory = watch("category", "") as string;
+  const watchLocation = watch("location", "") as CountrySelectValue;
+  const watchGuestCount = watch("guestCount", 1) as number;
+  const watchRoomCount = watch("roomCount", 1) as number;
+  const watchBathroomCount = watch("bathroomCount", 1) as number;
+  const watchImageSrc = watch("imageSrc", "") as string;
 
   const Map = useMemo(
     () =>
@@ -135,8 +135,8 @@ export const RentModal: React.FC<RentModalProps> = () => {
         setStep(STEPS.CATEGORY);
         rentModal.onClose();
       })
-      .catch((error) => {
-        toast.error("Something went wrong!!!");
+      .catch(() => {
+        toast.error("Something wong!!!");
       })
       .finally(() => {
         setIsLoading(false);
@@ -284,6 +284,7 @@ export const RentModal: React.FC<RentModalProps> = () => {
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSubmit={handleSubmit(onSubmit)}
     />
   );
