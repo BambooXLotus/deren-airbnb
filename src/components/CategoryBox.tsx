@@ -32,12 +32,14 @@ export const CategoryBox: React.FC<CategoryBoxProps> = ({
     };
 
     if (params?.get("category") === label) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       delete updatedQuery.category;
     }
 
     const url = qs.stringifyUrl(
       {
         url: "/",
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         query: updatedQuery,
       },
       { skipNull: true }

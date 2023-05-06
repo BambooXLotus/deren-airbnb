@@ -123,7 +123,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = () => {
       title="Register"
       actionLabel="Continue"
       onClose={registerModal.onClose}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={() => void handleSubmit(onSubmit)()}
       body={bodyContent}
       footer={footerContent}
     ></Modal>

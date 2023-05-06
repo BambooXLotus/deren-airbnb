@@ -115,7 +115,7 @@ export const LoginModal = () => {
       title="Login"
       actionLabel="Continue"
       onClose={loginModal.onClose}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={() => void handleSubmit(onSubmit)()}
       body={bodyContent}
       footer={footerContent}
     ></Modal>

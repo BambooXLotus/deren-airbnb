@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import { TbPhotoPlus } from "react-icons/tb";
 
 declare global {
-  var cloudinary: any;
+  let cloudinary: any;
 }
 
 type ImageUploadProps = {
@@ -20,6 +20,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 }) => {
   const handleUpload = useCallback(
     (result: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       onChange(result.info.secure_url);
     },
     [onChange]
@@ -36,6 +37,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       {({ open }) => {
         return (
           <div
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             onClick={() => open?.()}
             className="relative flex cursor-pointer flex-col items-center justify-center gap-4 border-2 border-dashed border-neutral-300 p-20 text-neutral-600 transition hover:opacity-70"
           >
