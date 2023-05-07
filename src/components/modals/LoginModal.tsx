@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useCallback, useState } from "react";
 import { type FieldValues, type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
