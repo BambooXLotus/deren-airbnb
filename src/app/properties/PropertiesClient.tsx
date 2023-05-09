@@ -53,7 +53,7 @@ export const PropertiesClient: React.FC<PropertiesClientProps> = ({
             listing={listing}
             // reservation={reservation}
             actionId={listing.id}
-            onAction={onCancel}
+            onAction={(id) => void onCancel(id)}
             disabled={deletingId === listing.id}
             actionLabel="Delete property"
             currentUser={currentUser}
