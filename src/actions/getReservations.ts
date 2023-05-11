@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { prisma } from "~/server/db"
 
 type getReservationParams = {
@@ -22,6 +23,7 @@ export default async function getReservations({ listingId, userId, authorId }: g
   }
 
   const reservations = await prisma.reservation.findMany({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     where: query,
     include: {
       listing: true

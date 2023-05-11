@@ -14,6 +14,7 @@ export async function POST(
     return NextResponse.error()
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const body = await request.json()
 
   const { title, description, imageSrc, category, roomCount, bathroomCount, guestCount, location, price } = body as RentFormInput

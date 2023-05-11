@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import getCurrentUser from '~/actions/getCurrentUser';
 
 import { NextResponse } from 'next/server'

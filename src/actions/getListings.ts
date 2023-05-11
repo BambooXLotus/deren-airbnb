@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { prisma } from '~/server/db';
 
 export type getListingsParams = {
@@ -24,6 +25,7 @@ export default async function getListings(params: getListingsParams) {
     category
   } = params
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const query: any = {
   }
 
@@ -63,6 +65,7 @@ export default async function getListings(params: getListingsParams) {
   }
 
   const listings = await prisma.listing.findMany({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     where: query,
     orderBy: {
       createdAt: 'desc'
